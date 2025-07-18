@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spogmai Mobile Zone - Professional Mobile Repair Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-red: #c70000;
+            --dark-red: #8a0000;
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #ffffff;
+            --text-dark: #111;
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: #0a0a0a;
+            color: var(--text-light);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Background with motherboard */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/images/smmz.jpg') no-repeat center center;
+            background-size: cover;
+            filter: brightness(0.7);
+        }
+
+        .glass-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(15, 15, 15, 0.6);
+            z-index: 0;
+        }
+
+        /* Compact Header */
+        header {
+            background-color: var(--dark-red);
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100%;
+            max-width: 180px;
+            object-fit: contain;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 60px 5%;
+            margin: 30px 20px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .two-column {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        /* Home Section */
+        .home-section .two-column {
+            align-items: center;
+        }
+
+        .home-heading {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .home-heading span.mobile {
+            color: var(--primary-red);
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(199, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            background: #b00000;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(199, 0, 0, 0.4);
+        }
+
+        .profile-image {
+            width: 100%;
+            max-width: 100%;
+            height: 380px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #2a2a2a, #1a1a1a);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* About Section */
+        .about-section .two-column {
+            gap: 40px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-red);
+        }
+
+        .about-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+
+        .contact-info {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .contact-item i {
+            margin-right: 12px;
+            color: var(--primary-red);
+            font-size: 1.1rem;
+            width: 24px;
+        }
+
+        /* Course Section */
+        .courses-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            flex: 1;
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .course-header {
+            background: var(--primary-red);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .course-level {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .course-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .course-details {
+            padding: 25px;
+        }
+
+        .course-topics {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .course-topics li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .course-topics li:before {
+            content: '✓';
+            color: var(--primary-red);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .course-btn {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* Benefits Section */
+        .benefits-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .benefit-card {
+            flex: 1 1 280px;
+            background: rgba(30, 30, 30, 0.4);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(40, 40, 40, 0.5);
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-red);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .benefit-title {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        .benefit-text {
+            color: #ccc;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .reviews-section {
+            margin-top: 60px;
+        }
+
+        .reviews-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: var(--text-light);
+        }
+
+        .reviews-container {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            height: 260px;
+            overflow: hidden;
+        }
+
+        .review-card {
+            position: absolute;
+            width: 100%;
+            padding: 25px;
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            opacity: 0;
+        }
+
+        .review-card.active {
+            opacity: 1;
+        }
+
+        .review-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            border: 2px solid var(--primary-red);
+        }
+
+        .review-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .review-text {
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+        }
+
+        .review-rating {
+            color: gold;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .review-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        /* App Download Section */
+        .app-section {
+            background: var(--dark-red);
+            color: white;
+            padding: 60px 5%;
+            border: none;
+        }
+
+        .app-section .section-title {
+            color: white;
+        }
+
+        .app-section .section-title::after {
+            background: white;
+        }
+
+        .app-features {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .app-features li {
+            padding: 10px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .app-features li i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            color: #ffcc00;
+        }
+
+        .phone-frame {
+            position: relative;
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto;
+        }
+
+        .phone-frame img {
+            width: 100%;
+            display: block;
+        }
+
+        .app-screenshot {
+            position: absolute;
+            top: 12%;
+            left: 6.5%;
+            width: 87%;
+            height: 76%;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .app-screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-download-btn {
+            display: inline-block;
+            margin-top: 25px;
+            background: white;
+            color: var(--dark-red);
+            padding: 12px 35px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Contact Section */
+        .contact-form {
+            margin-top: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(30, 30, 30, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            color: var(--text-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-red);
+            outline: none;
+            background: rgba(40, 40, 40, 0.5);
+        }
+
+        .contact-info-section {
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-red);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background: #b00000;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(199, 0, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 12px rgba(199, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(199, 0, 0, 0);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 25px 5%;
+            margin: 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .home-heading {
+                font-size: 2.6rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .home-heading {
+                font-size: 2.4rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .profile-image {
+                max-width: 100%;
+                height: 320px;
+                margin: 30px auto 0;
+            }
+            
+            .courses-container {
+                flex-direction: column;
+            }
+            
+            .benefit-card {
+                flex: 1 1 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 20px;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--dark-red);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                transition: right 0.4s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            nav a {
+                font-size: 18px;
+                padding: 10px 20px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .home-heading {
+                font-size: 2.2rem;
+            }
+            
+            section {
+                padding: 40px 20px;
+                margin: 20px 15px;
+            }
+            
+            .benefit-card {
+                flex: 1 1 100%;
+            }
+            
+            .social-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .review-avatar {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-heading {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .intro-text, .about-text {
+                font-size: 1rem;
+            }
+            
+            .btn, .app-download-btn {
+                padding: 10px 25px;
+                font-size: 0.95rem;
+            }
+            
+            .profile-image {
+                height: 250px;
+            }
+            
+            .reviews-container {
+                height: 300px;
+            }
+            
+            .review-card {
+                padding: 15px;
+            }
+            
+            .contact-item span {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background with motherboard -->
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="glass-overlay"></div>
+    </div>
+
+    <!-- Compact Header -->
+    <header>
+        <div class="logo">
+            <img src="/images/gg.png" alt="Spogmai Mobile Zone Logo">
+        </div>
+        <nav>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#courses">Course</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#app">App Download</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="home-section">
+        <div class="section-content">
+            <div class="two-column">
+                <div class="col">
+                    <h1 class="home-heading">
+                        <span>Spogmai</span> <span class="mobile">Mobile</span> <span>Zone</span>
+                    </h1>
+                    <p class="intro-text">Professional mobile repair training center with industry-leading courses and hands-on experience. Transform your career with our expert-led programs.</p>
+                    <a href="#app" class="btn">Download SMZ Institute App</a>
+                </div>
+                <div class="col">
+                    <div class="profile-image">
+                        <img src="/images/Untitled Project.jpg" alt="Mobile Repair Technician">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="section-content">
+            <div class="two-column">
+                <div class="col">
+                    <h2 class="section-title">About Me</h2>
+                    <p class="about-text">With over 12 years of experience in mobile repair and training, I founded Spogmai Mobile Zone to provide world-class education in mobile technology. Our center combines theoretical knowledge with extensive practical training.</p>
+                    <p class="about-text">We've trained more than 800 students who now run successful repair businesses or work with leading tech companies. Our curriculum is constantly updated to include the latest technologies and repair techniques.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@spogmaimobilezone.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="profile-image">
+                        <img src="/images/smmz.jpg" alt="Professional Trainer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Section -->
+    <section id="courses" class="course-section">
+        <div class="section-content">
+            <h2 class="section-title">Our Courses</h2>
+            <div class="courses-container">
+                <div class="course-card">
+                    <div class="course-header">
+                        <h3 class="course-level">Basic Level</h3>
+                        <div class="course-price">Rs 25,000/-</div>
+                    </div>
+                    <div class="course-details">
+                        <ul class="course-topics">
+                            <li>Mobile electronics fundamentals</li>
+                            <li>Soldering techniques</li>
+                            <li>Component identification</li>
+                            <li>Display & battery replacement</li>
+                            <li>Software troubleshooting</li>
+                            <li>Basic circuit analysis</li>
+                        </ul>
+                        <a href="#contact" class="btn course-btn">Join Now</a>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-header">
+                        <h3 class="course-level">Advance Level</h3>
+                        <div class="course-price">Rs 50,000/-</div>
+                    </div>
+                    <div class="course-details">
+                        <ul class="course-topics">
+                            <li>Chip-level motherboard repair</li>
+                            <li>Advanced microsoldering</li>
+                            <li>iPhone & iPad logic board repair</li>
+                            <li>Data recovery techniques</li>
+                            <li>Water damage solutions</li>
+                            <li>BGA reballing & rework</li>
+                        </ul>
+                        <a href="#contact" class="btn course-btn">Join Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="section-content">
+            <h2 class="section-title">Why Choose Us?</h2>
+            <div class="benefits-container">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3 class="benefit-title">Industry-Recognized Certification</h3>
+                    <p class="benefit-text">Globally valid certification that enhances your credibility and job prospects.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="benefit-title">Advanced Tools Provided</h3>
+                    <p class="benefit-text">Access to professional-grade equipment during training.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="benefit-title">Job Placement Assistance</h3>
+                    <p class="benefit-text">Direct connections with mobile service centers and manufacturers.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="benefit-title">Lifetime Support</h3>
+                    <p class="benefit-text">Continuous guidance even after course completion.</p>
+                </div>
+            </div>
+            
+            <div class="reviews-section">
+                <h3 class="reviews-title">Student Success Stories</h3>
+                <div class="reviews-container">
+                    <div class="review-card active">
+                        <div class="review-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Rajesh Kumar">
+                        </div>
+                        <p class="review-text">"The training completely transformed my career. I went from a mobile shop worker to owning my own successful repair center."</p>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-name">Rajesh Kumar</div>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-avatar">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Priya Sharma">
+                        </div>
+                        <p class="review-text">"The advanced microsoldering techniques I learned here helped me land a job at a premium service center with double my previous salary."</p>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-name">Priya Sharma</div>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Amit Patel">
+                        </div>
+                        <p class="review-text">"The hands-on approach and detailed explanations made complex concepts easy to understand. Best investment in my career!"</p>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-name">Amit Patel</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section id="app" class="app-section">
+        <div class="section-content">
+            <div class="two-column">
+                <div class="col">
+                    <h2 class="section-title">SMZ Mobile Repairing Institute App</h2>
+                    <ul class="app-features">
+                        <li><i class="fas fa-check-circle"></i> Step-by-step repair guides</li>
+                        <li><i class="fas fa-check-circle"></i> Circuit diagrams & schematics</li>
+                        <li><i class="fas fa-check-circle"></i> Component identification tool</li>
+                        <li><i class="fas fa-check-circle"></i> Troubleshooting assistant</li>
+                        <li><i class="fas fa-check-circle"></i> Latest firmware updates</li>
+                        <li><i class="fas fa-check-circle"></i> Direct instructor support</li>
+                    </ul>
+                    <p><strong>Version:</strong> 2.1.5 | <strong>Size:</strong> 42 MB</p>
+                    <a href="#" class="app-download-btn">
+                        <i class="fab fa-google-play"></i> Download for Android
+                    </a>
+                </div>
+                <div class="col">
+                    <div class="phone-frame">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iNTIwIiB2aWV3Qm94PSIwIDAgMjYwIDUyMCI+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMjQwIiBoZWlnaHQ9IjUwMCIgcng9IjMwIiByeT0iMzAiIGZpbGw9IiMxYTFhMWEiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iMjAiIHk9IjI1IiB3aWR0aD0iMjIwIiBoZWlnaHQ9IjI1IiByeD0iMTAiIHJ5PSIxMCIgZmlsbD0iIzMzMzMzMyIvPjxjaXJjbGUgY3g9IjEzMCIgY3k9IjQ5MCIgcj0iMTUiIGZpbGw9IiMzMzMzMzMiLz48L3N2Zz4=" alt="iPhone Frame">
+                        <div class="app-screenshot">
+                            <img src="/images/IMG_2154.JPG" alt="App Screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="section-content">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="two-column">
+                <div class="col">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" rows="4" placeholder="Your message or inquiry"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                <div class="col">
+                    <div class="contact-info-section">
+                        <h3>Contact Information</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Tech Street, Electronics City, Bangalore, India</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@spogmaimobilezone.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                        
+                        <h3 style="margin-top: 25px;">Connect With Us</h3>
+                        <div class="social-links">
+                            <a href="#" class="social-icon" style="animation-delay: 0s;">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-icon" style="animation-delay: 0.2s;">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="social-icon" style="animation-delay: 0.4s;">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#" class="social-icon" style="animation-delay: 0.6s;">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Spogmai Mobile Zone. All Rights Reserved.</p>
+        <p>SMZ Professional Mobile Repair Training Institute</p>
+    </footer>
+
+    <script>
+        // Auto-sliding reviews
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviews = document.querySelectorAll('.review-card');
+            let currentIndex = 0;
+            
+            function showReview(index) {
+                reviews.forEach(review => review.classList.remove('active'));
+                reviews[index].classList.add('active');
+            }
+            
+            function nextReview() {
+                currentIndex = (currentIndex + 1) % reviews.length;
+                showReview(currentIndex);
+            }
+            
+            // Auto rotate every 5 seconds
+            setInterval(nextReview, 5000);
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    const navMenu = document.getElementById('nav-menu');
+                    mobileMenu.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.querySelector('.contact-form');
+            if(contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you! Your message has been sent. We will contact you soon.');
+                    contactForm.reset();
+                });
+            }
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('mobile-menu');
+            const navMenu = document.getElementById('nav-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
